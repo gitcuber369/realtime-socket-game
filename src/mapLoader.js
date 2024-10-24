@@ -1,6 +1,7 @@
 const tmx = require("tmx-parser");
 
 // This function will load the map from the file and return a 2D array of the map
+// promise is used cause the map is loaded asynchronously
 async function loadedMap() {
   const map = await new Promise((resolve, reject) => {
     tmx.parseFile("./src/map.tmx", function (err, loadedMap) {
