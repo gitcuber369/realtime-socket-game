@@ -18,6 +18,10 @@ socket.on("map", (loadedMap) => {
 
 const canvasEl = document.getElementById("canvas");
 const canvas = canvasEl.getContext("2d");
+
+canvasEl.width = window.innerWidth;
+canvasEl.height = window.innerHeight;
+
 console.log(canvasEl);
 
 socket.on("map", (map) => {
@@ -25,9 +29,14 @@ socket.on("map", (map) => {
 });
 
 function gameloop() {
-  for (let row = 0; row < map.length; row++) {
-    for (let col = 0; col < map[0].length; col++) {
-      const { id } = map[row][col];
+  canvas.clearRect(0, 0, canvasEl.width, canvasEl.height);
+
+  const rows = Math.ceil(canvasEl.height / tileSize);
+  const cols = Math.ceil(canvasEl.width / tileSize);
+
+  for (let row = 0; row < rows; row++) {
+    for (let col = 0; col < cols; col++) {
+      const { id } = map[row] && map[row][col] ? map[row][col] : { id: 0 }; // Prevent undefined errors      const imageRow = parseInt(id / tileInRow);
       const imageRow = parseInt(id / tileInRow);
       const imageCol = id % tileInRow;
 
